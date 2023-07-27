@@ -1,2 +1,76 @@
-asdsadsadsadasdsad# test
-			sasdasd		dcdac
+const RecycleBinProcedure = require('./recyclebinprocedure');
+const cron = require('node-cron');
+
+// Your existing CRUD functions...
+const addProcedureToRecycleBin = async (procedureId, orgId, deleteDate) => {
+  try {
+    // Assuming you have the logic to calculate deleteDate based on the cron job interval
+    const newRecycleBinProcedure = new RecycleBinProcedure(procedureId, orgId, deleteDate);
+
+    // Your code to save the newRecycleBinProcedure to the database...
+    // For example, using MongoDB and Mongoose:
+    // await newRecycleBinProcedure.save();
+
+    return newRecycleBinProcedure;
+  } catch (error) {
+    throw new Error('Error adding procedure to the recycle bin');
+  }
+};
+
+const getFilesInRecycleBin = async () => {
+  try {
+    // Your code to fetch all files in the recycle bin from the database...
+  } catch (error) {
+    throw new Error('Error fetching files from the recycle bin');
+  }
+};
+
+const deleteProcedure = async (procedureId) => {
+  try {
+    // Your code to delete a procedure from the recycle bin and remove the entry from the database...
+  } catch (error) {
+    throw new Error('Error deleting procedure from the recycle bin');
+  }
+};
+
+const restoreProcedure = async (procedureId) => {
+  try {
+    // Your code to restore a procedure from the recycle bin and remove the entry from the database...
+  } catch (error) {
+    throw new Error('Error restoring procedure from the recycle bin');
+  }
+};
+
+const removeFilesFromCronj = async (procedureId) => {
+  try {
+    // Your code to remove the files from cronj and the recycle bin based on the flag...
+  } catch (error) {
+    throw new Error('Error removing files from cronj and the recycle bin');
+  }
+};
+
+// Function to delete expired procedures from the recycle bin
+const deleteExpiredProcedures = async () => {
+  try {
+    // Your code to find and delete entries from the recycle bin with deleteDate in the past
+    // For example, using MongoDB and Mongoose:
+    // const currentDate = new Date();
+    // await RecycleBinProcedure.deleteMany({ deleteDate: { $lte: currentDate } });
+
+    console.log('Expired procedures deleted from the recycle bin.');
+  } catch (error) {
+    console.error('Error deleting expired procedures:', error.message);
+  }
+};
+
+// Schedule the cron job to run daily at midnight (0:0:0)
+cron.schedule('0 0 * * *', deleteExpiredProcedures);
+
+module.exports = {
+  addProcedureToRecycleBin,
+  getFilesInRecycleBin,
+  deleteProcedure,
+  restoreProcedure,
+  removeFilesFromCronj,
+  // Add other functions here
+};
